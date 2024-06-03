@@ -15,14 +15,14 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth= FirebaseAuth.getInstance()
-        binding.buttonLogin.setOnClickListener {
+        binding.buttonWelcomeLogin.setOnClickListener {
             val intent= Intent(this,LoginActivity::class.java)
             intent.putExtra("action","login")
             startActivity(intent)
         }
         binding.buttonRegister.setOnClickListener {
-            val intent= Intent(this,LoginActivity::class.java)
-            intent.putExtra("action","register")
+            val intent= Intent(this,SelectMessActivity::class.java)
+            //intent.putExtra("action","register")
             startActivity(intent)
         }
     }

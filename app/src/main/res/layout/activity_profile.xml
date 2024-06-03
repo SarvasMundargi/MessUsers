@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="600px"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        app:cardCornerRadius="200dp"
+        android:layout_marginStart="50px"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/register_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/profile_icon"
+            android:scaleType="centerCrop"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/edit_profilename"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="USERNAME"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView" />
+
+    <TextView
+        android:id="@+id/edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserratsemibold"
+        android:text="EDIT PROFILE"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView2" />
+
+    <EditText
+        android:id="@+id/register_name"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/register_background"
+        android:ems="10"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:hint="Change Your Name"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        android:fontFamily="@font/montserratsemibold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_profile" />
+
+    <Button
+        android:id="@+id/changepic_button"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="12dp"
+        android:text="Change Profile Picture"
+        android:textColor="@color/white"
+        android:fontFamily="@font/montserratsemibold"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/blue_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_name" />
+
+    <Button
+        android:id="@+id/updateProfile_button"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="12dp"
+        android:text="UPDATE CHANGES"
+        android:textColor="@color/white"
+        android:fontFamily="@font/montserratsemibold"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/blue_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changepic_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>

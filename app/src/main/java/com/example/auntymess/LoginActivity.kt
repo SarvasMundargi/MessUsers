@@ -13,8 +13,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.auntymess.Models.UserData
 import com.example.auntymess.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -34,11 +37,13 @@ class LoginActivity : AppCompatActivity() {
         auth=FirebaseAuth.getInstance()
 
         val action=intent.getStringExtra("action")
+        val MessName=intent.getStringExtra("messName")
+        binding.buttonSelectMess.text=MessName
 
         if(action=="login"){
             binding.loginEmail.visibility= View.VISIBLE
             binding.loginPassword.visibility= View.VISIBLE
-            binding.tvNewhere.visibility= View.INVISIBLE
+            //binding.tvNewhere.visibility= View.INVISIBLE
             binding.buttonRegister.visibility= View.INVISIBLE
             binding.registerEmail.visibility= View.GONE
             binding.registerName.visibility= View.GONE
@@ -123,42 +128,71 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun addUserData(name: String, email: String, uid: String) {
-        database= FirebaseDatabase.getInstance().getReference()
-        val userData= UserData(
-            uid,
-            name,
-            email
-        )
-        database.child("users").child(uid).setValue(userData)
+        val database = FirebaseDatabase.getInstance().getReference()
+        val messName = intent.getStringExtra("messName")
+        binding.buttonSelectMess.text = messName  // Update UI with messName
 
-        //For storage
-        storage= FirebaseStorage.getInstance().getReference()
-        storage.child("profile_img/$uid.jpg").putFile(imageUri!!)
+        getMessId(messName) { messId ->
+            if (messId != null) {
+                // Store user data under "MessOwners/{messId}/users/{uid}"
+                val userData = UserData(uid, name, email)
+                database.child("MessOwners").child(messId).child("users").child(uid).setValue(userData)
 
-        // For storage
-        storage = FirebaseStorage.getInstance().getReference()
-        val imageRef = storage.child("profile_img/$uid.jpg")
+                // Upload profile image to Firebase Storage
+                val storageRef = FirebaseStorage.getInstance().getReference()
+                val imageRef = storageRef.child("profile_img/$uid.jpg")
 
-        imageRef.putFile(imageUri!!)
-            .addOnSuccessListener { taskSnapshot ->
-                // Image uploaded successfully, now get the download URL
-                imageRef.downloadUrl.addOnSuccessListener { uri ->
-                    val imageUrl = uri.toString()
+                imageRef.putFile(imageUri!!)
+                    .addOnSuccessListener { _ ->
+                        // Get the download URL of the uploaded image
+                        imageRef.downloadUrl.addOnSuccessListener { uri ->
+                            val imageUrl = uri.toString()
 
-                    // Save the image URL to the database
-                    database.child("users").child(uid).child("profileImage").setValue(imageUrl)
+                            // Store the image URL under user node in database
+                            database.child("MessOwners").child(messId).child("users").child(uid)
+                                .child("profileImage").setValue(imageUrl)
 
-                    // Load the image into the ImageView using Glide
+                            // Handle image upload success
+                            Log.d("Firebase", "Image uploaded successfully")
+                        }.addOnFailureListener { exception ->
+                            // Handle failure to get image URL
+                            Log.e("Firebase", "Error getting download URL", exception)
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        // Handle failure to upload image
+                        Log.e("Firebase", "Error uploading image", exception)
+                    }
+            } else {
+                Log.e("Firebase", "MessId not found for messName: $messName")
+            }
+        }
+    }
 
-                }.addOnFailureListener { exception ->
-                    // Handle the failure to get download URL
-                    Log.e(ContentValues.TAG, "Error getting download URL", exception)
+
+    private fun getMessId(messName: String?, callback: (String?) -> Unit) {
+        val database = FirebaseDatabase.getInstance().getReference()
+
+        database.child("MessOwners").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var messId: String? = null
+
+                for (messSnapshot in snapshot.children) {
+                    val name = messSnapshot.child("MessName").getValue(String::class.java)
+
+                    if (name != null && name == messName) {
+                        messId = messSnapshot.key
+                        break
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                // Handle the failure to upload image
-                Log.e(ContentValues.TAG, "Error uploading image", exception)
+
+                callback.invoke(messId)  // Invoke the callback with the retrieved messId
             }
 
+            override fun onCancelled(error: DatabaseError) {
+                // Handle onCancelled if needed
+                callback.invoke(null)  // Invoke callback with null in case of error
+            }
+        })
     }
 }

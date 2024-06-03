@@ -3,6 +3,7 @@ package com.example.auntymess
 import PresentAbsentAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.auntymess.Models.AttendanceItemModel
 import com.example.auntymess.Models.BalanceItemModel
@@ -30,6 +31,10 @@ class PresentAbsentActivity : AppCompatActivity() {
 
         val action=intent.getStringExtra("action")
         val activity=intent.getStringExtra("activity")
+        val messId=intent.getStringExtra("messId")
+        Log.d("MessIdBalance", "$messId")
+
+        val userid = auth.currentUser?.uid
 
         if (activity=="Main") {
             if (action == "present") {
@@ -43,10 +48,8 @@ class PresentAbsentActivity : AppCompatActivity() {
             recyclerview.layoutManager = LinearLayoutManager(this)
             recyclerview.adapter = mAdapter
 
-            val userid = auth.currentUser!!.uid
-
-            if (userid != null) {
-                val attRef = databaseReference.child("attendance").child(userid)
+            if (userid != null && messId!=null) {
+                val attRef = databaseReference.child("MessOwners").child(messId).child("attendance").child(userid)
 
                 attRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -85,11 +88,12 @@ class PresentAbsentActivity : AppCompatActivity() {
             recyclerview.layoutManager = LinearLayoutManager(this)
             recyclerview.adapter = mAdapter
 
-            val userid = auth.currentUser!!.uid
-            val balId=intent.getStringExtra("bal_id")
 
-            if(userid!=null && balId!=null){
-                val attRef = databaseReference.child("balance").child(userid).child(balId)
+            val balId=intent.getStringExtra("bal_id")
+            Log.d("balanceid", "$balId")
+
+            if(userid!=null && balId!=null && messId!=null){
+                val attRef = databaseReference.child("MessOwners").child(messId).child("balance").child(userid).child(balId)
 
                 attRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {

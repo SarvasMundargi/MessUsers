@@ -7,4 +7,5 @@
 
     <style name="Theme.AuntyMess" parent="Base.Theme.AuntyMess" />
     <style name="NoBar" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="Theme.DrawerLayout" parent="Theme.AppCompat.Light.DarkActionBar" />
 </resources>

@@ -10,8 +10,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/NoBar"
+        android:theme="@style/Theme.AuntyMess"
         tools:targetApi="31">
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectMessActivity"
+            android:exported="false" />
         <activity
             android:name=".PresentAbsentActivity"
             android:exported="false" />
@@ -23,7 +29,9 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DrawerLayout" />
         <activity
             android:name=".WelcomeActivity"
             android:exported="true">
