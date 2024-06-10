@@ -15,7 +15,7 @@ class SpashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.splashText.alpha=0f
-        binding.splashText.animate().setDuration(2000).alpha(1f).withEndAction{
+        binding.splashText.animate().setDuration(1500).alpha(1f).withEndAction{
             startActivity(Intent(this,WelcomeActivity::class.java))
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
             finish()

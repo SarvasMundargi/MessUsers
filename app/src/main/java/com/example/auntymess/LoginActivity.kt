@@ -62,6 +62,9 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else{
                     binding.loadingAnimation.visibility = View.VISIBLE
+                    binding.loadingImg.visibility = View.VISIBLE
+                    binding.buttonLogin.visibility=View.GONE
+
                     auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this){
                         binding.loadingAnimation.visibility = View.GONE
                         if(it.isSuccessful){
@@ -71,6 +74,9 @@ class LoginActivity : AppCompatActivity() {
                         }
                         else{
                             Toast.makeText(this,"Not proper credentials", Toast.LENGTH_SHORT).show()
+                            binding.buttonLogin.visibility=View.VISIBLE
+                            binding.loadingAnimation.visibility = View.GONE
+                            binding.loadingImg.visibility = View.GONE
                         }
                     }
                 }
@@ -97,6 +103,9 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else{
                     binding.loadingAnimation.visibility = View.VISIBLE
+                    binding.loadingImg.visibility = View.VISIBLE
+                    binding.buttonRegister.visibility=View.GONE
+                    binding.cardView.visibility=View.GONE
 
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                         //progressDialog.dismiss()// Dismiss loading indicator
@@ -115,6 +124,9 @@ class LoginActivity : AppCompatActivity() {
                         }
                         else{
                             Toast.makeText(this, "Error Connecting User", Toast.LENGTH_SHORT).show()
+                            binding.buttonRegister.visibility=View.VISIBLE
+                            binding.loadingImg.visibility = View.GONE
+                            binding.cardView.visibility=View.VISIBLE
                         }
                     }
                 }
