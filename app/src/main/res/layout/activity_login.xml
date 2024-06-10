@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_animation"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/loading"
+        android:visibility="gone"/>
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -25,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/love_ya_like_a_sister"
-        android:text="AUNTY MESS."
+        android:text="ONE MESS."
         android:textSize="60sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/love_ya_like_a_sister"
-        android:text="THE BEST MESS."
+        android:text="Please Fill Your Details"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"

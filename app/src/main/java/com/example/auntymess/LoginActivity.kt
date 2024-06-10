@@ -1,5 +1,6 @@
 package com.example.auntymess
 
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
@@ -60,7 +61,9 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this,"Please fill all the Credentials", Toast.LENGTH_SHORT).show()
                 }
                 else{
+                    binding.loadingAnimation.visibility = View.VISIBLE
                     auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this){
+                        binding.loadingAnimation.visibility = View.GONE
                         if(it.isSuccessful){
                             Toast.makeText(this,"Logged In😁", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this,MainActivity::class.java))
@@ -75,38 +78,49 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-        else if(action=="register"){
-            binding.buttonLogin.isEnabled=false
-            binding.buttonLogin.alpha=0.5f
+        else if(action == "register"){
+            binding.buttonLogin.isEnabled = false
+            binding.buttonLogin.alpha = 0.5f
+
 
             binding.buttonRegister.setOnClickListener {
-                val email=binding.registerEmail.text.toString()
-                val password=binding.registerPassword.text.toString()
-                val name=binding.registerName.text.toString()
+//                val progressDialog = ProgressDialog(this)
+//                progressDialog.setMessage("Loading...")
+//                progressDialog.show()
+                val email = binding.registerEmail.text.toString()
+                val password = binding.registerPassword.text.toString()
+                val name = binding.registerName.text.toString()
 
                 if(email.isBlank() || password.isBlank() || name.isBlank()){
+                    //progressDialog.dismiss()
                     Toast.makeText(this,"Please fill all the Credentials", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {
-                        if(it.isSuccessful){
+                    binding.loadingAnimation.visibility = View.VISIBLE
+
+                    auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                        //progressDialog.dismiss()// Dismiss loading indicator
+                        binding.loadingAnimation.visibility = View.GONE
+                        if(task.isSuccessful){
                             //auth.signOut()
-                            val user=auth.currentUser
+                            val user = auth.currentUser
                             //Adding the user Database
                             user?.let {
-                                addUserData(name,email,auth.currentUser!!.uid)
-                                Toast.makeText(this,"Logged In",Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(this,MainActivity::class.java))
+                                addUserData(name, email, auth.currentUser!!.uid)
+                                //progressDialog.dismiss()
+                                Toast.makeText(this, "Logged In", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, MainActivity::class.java))
                                 finish()
                             }
                         }
                         else{
-                            Toast.makeText(this,"Error Connecting User",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Error Connecting User", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             }
         }
+
 
         binding.cardView.setOnClickListener{
             val intent=Intent()

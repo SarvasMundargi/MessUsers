@@ -1,5 +1,6 @@
 package com.example.auntymess.Adapters
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -34,6 +35,9 @@ class StudentAdapter(private val items: MutableList<String>): RecyclerView.Adapt
                 intent.putExtra("action","register")
                 context.startActivity(intent)
 
+                if (context is Activity) {
+                    context.finish()
+                }
             }
         }
 
