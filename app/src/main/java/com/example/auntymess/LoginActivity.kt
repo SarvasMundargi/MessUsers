@@ -45,11 +45,17 @@ class LoginActivity : AppCompatActivity() {
             binding.loginEmail.visibility= View.VISIBLE
             binding.loginPassword.visibility= View.VISIBLE
             //binding.tvNewhere.visibility= View.INVISIBLE
+            binding.tvForgotPassword.visibility=View.VISIBLE
             binding.buttonRegister.visibility= View.INVISIBLE
             binding.registerEmail.visibility= View.GONE
             binding.registerName.visibility= View.GONE
             binding.registerPassword.visibility= View.GONE
             binding.cardView.visibility= View.GONE
+
+            //Handling forgot password button
+            binding.tvForgotPassword.setOnClickListener {
+                startActivity(Intent(this,ForgotPasswordActivity::class.java))
+            }
 
             //Handling login
 
