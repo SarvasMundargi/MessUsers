@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
@@ -29,6 +30,10 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().getReference()
+        binding.pgBarPresent.visibility= View.VISIBLE
+        binding.pgBarAbsent.visibility= View.VISIBLE
+        binding.presentCount.visibility=View.GONE
+        binding.absentCount.visibility=View.GONE
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -108,6 +113,10 @@ class MainActivity : AppCompatActivity() {
                                     binding.messEndDate.text = attModel.endDate
                                 }
                             }
+                            binding.pgBarPresent.visibility= View.GONE
+                            binding.pgBarAbsent.visibility= View.GONE
+                            binding.presentCount.visibility=View.VISIBLE
+                            binding.absentCount.visibility=View.VISIBLE
                         }
 
                         override fun onCancelled(error: DatabaseError) {

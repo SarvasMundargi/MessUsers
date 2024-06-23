@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -137,12 +136,14 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQEST && resultCode == RESULT_OK && data != null && data.data != null)
+        if (requestCode == PICK_IMAGE_REQEST && resultCode == RESULT_OK && data != null && data.data != null){
             imageUri = data.data
-        Glide.with(this).load(imageUri).apply(RequestOptions.circleCropTransform())
-            .into(binding.registerImage)
+            Glide.with(this).load(imageUri).apply(RequestOptions.circleCropTransform())
+                .into(binding.registerImage)
 
-        flag = true
+            flag=true
+        }
+
     }
 
     override fun onBackPressed() {
