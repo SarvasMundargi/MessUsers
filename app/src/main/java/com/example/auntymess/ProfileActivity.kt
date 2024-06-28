@@ -98,6 +98,8 @@ class ProfileActivity : AppCompatActivity() {
                         if (messid != null && userid != null) {
                             database.child("MessOwners").child(messid).child("users").child(userid).child("name")
                                 .setValue(newname)
+                            binding.updateProfileButton.visibility = View.VISIBLE
+                            binding.progressBar.visibility = View.GONE
                         }
                     }
                 }
