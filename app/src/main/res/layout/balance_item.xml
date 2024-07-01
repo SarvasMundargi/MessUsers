@@ -125,6 +125,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/register_background"
         android:text="PAY"
+        android:visibility="gone"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

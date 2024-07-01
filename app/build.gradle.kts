@@ -53,4 +53,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.airbnb.android:lottie:6.1.0")
+    implementation ("com.google.android.gms:play-services-maps:18.0.2")
+
 }
