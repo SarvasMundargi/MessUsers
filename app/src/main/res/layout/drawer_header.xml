@@ -8,12 +8,12 @@
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/om"/>
+        android:src="@drawable/app_logo"/>
     
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AUNTY MESS"
+        android:text="ONE MESS"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="18sp"
